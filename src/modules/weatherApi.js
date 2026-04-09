@@ -17,7 +17,7 @@ export async function fetchData(query) {
         );
 
         if (!res.ok) {
-            throw new Error("")
+            throw new Error("Response status is not ok :(");
         }
         const data = await res.json();
         console.log(data);
