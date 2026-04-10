@@ -13,8 +13,10 @@ const rules = {
     ],
 };
 
-export function validateForm(formEls) {
+export function validateForm(form) {
+    const formEls = Array.from(form.elements);
     let isValid = true;
+    
     formEls.forEach((field) => {
         if (field.type === "button") return;
         isValid = validateField(field) && isValid;
