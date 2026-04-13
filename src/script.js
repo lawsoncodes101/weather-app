@@ -1,19 +1,19 @@
-import { fetchData } from "./modules/weatherApi.js";
-import { validateForm } from "./utils/form_validation.js";
+import fetchData from "./modules/fetchWeather.js";
+import validateForm from "./utils/form_validation.js";
+import fetchGIF from "./modules/fetchGIF.js";
 
 const form = document.querySelector("form");
-const [country, state] = [form.elements["country"], form.elements["state"]];
+const img = document.querySelector("img");
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     try {
-        if (!validateForm(form)) {
-            throw new Error("Form submission error.");    
-        }
-
-        const query = `${country.value}, ${state.value}`;
-        const data = await fetchData(query);
+        if (!validateForm(form)) throw new Error("Form submission error."); 
+        
+        const weatherData = await fetchData(form);
+        const GIF = await fetchGIF(weatherData.icon);
+        img.src = GIF;
     } catch (err) {
         console.error(err);
     }

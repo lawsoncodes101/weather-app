@@ -1,4 +1,5 @@
-const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
+const BASE_URL =
+    "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
 const params = new URLSearchParams({
     unitGroup: "us",
     key: "U4LFZMCQF4663KVW9UQ4DPUC4",
@@ -6,22 +7,27 @@ const params = new URLSearchParams({
     contentType: "json",
 });
 
-export async function fetchData(query) {
+export default async function fetchData(form) {
     try {
-        if (typeof query !== "string") {
-            throw new TypeError("Expected a string");
-        };
+        const [country, state] = [
+            form.elements["country"],
+            form.elements["state"],
+        ];
+        const query = `${country.value} ${state.value}`;
+
+        if (typeof query !== "string") throw new TypeError("Expected a string");
 
         const res = await fetch(
             `${BASE_URL}${encodeURIComponent(query)}/today?${params}`,
         );
 
         if (!res.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status} - ${response.statusText}`);
+            throw new Error(
+                `HTTP Error! Status: ${response.status} - ${response.statusText}`,
+            );
         }
         
         const data = await res.json();
-        console.log(data);
 
         return {
             date: new Date().toISOString().split("T")[0],
@@ -29,7 +35,7 @@ export async function fetchData(query) {
             timezone: data.timezone,
             condition: data.currentConditions.conditions,
             icon: data.currentConditions.icon,
-            description: data.description
+            description: data.description,
         };
     } catch (err) {
         console.error(err);

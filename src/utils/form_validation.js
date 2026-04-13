@@ -13,7 +13,7 @@ const rules = {
     ],
 };
 
-export function validateForm(form) {
+export default function validateForm(form) {
     const formEls = Array.from(form.elements);
     let isValid = true;
     
