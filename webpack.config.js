@@ -13,7 +13,7 @@ export default {
             template: "./src/index.html",
         }),
     ],
-    
+
     module: {
         rules: [
             {
@@ -23,7 +23,7 @@ export default {
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: "asset/resource",
-            },
+            }
         ],
     },
 };
